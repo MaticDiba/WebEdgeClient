@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Hyperledger.Aries.Agents;
 using Hyperledger.Aries.Routing;
+using Hyperledger.Aries.Utils;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebEdgeClient.Controllers
@@ -30,6 +31,13 @@ namespace WebEdgeClient.Controllers
             var context = await _agentLoader.LoadAgentForWallet(agentId);
 
             var inbox1 = await edgeClientService.FetchInboxAsync(context);
+            foreach(var inboxItem in inbox1.unprocessedItems)
+            {
+                var packedMessage = new PackedMessageContext(inboxItem.Data);
+                var unpacked = await CryptoUtils.UnpackAsync(context.Wallet, packedMessage.Payload);
+            }
+
+
             return Ok(inbox1.unprocessedItems);
         }
         [HttpGet]
@@ -38,6 +46,11 @@ namespace WebEdgeClient.Controllers
             var context = await _agentLoader.LoadAgentForWallet(agentId);
 
             var inboxItems = await edgeClientService.ListInboxAsync(context);
+            foreach (var inboxItem in inboxItems.Items)
+            {
+                var packedMessage = new PackedMessageContext(inboxItem.Data);
+                var unpacked = await CryptoUtils.UnpackAsync(context.Wallet, packedMessage.Payload);
+            }
             return Ok(inboxItems);
         }
     }

@@ -43,11 +43,11 @@ namespace WebEdgeClient.Controllers
                     ImageUrl = "myimage",
                     Name = agentId,
                 },
-                TheirAlias = new ConnectionAlias
-                {
-                    ImageUrl = "theirimage",
-                    Name = "Their name",
-                }
+                //TheirAlias = new ConnectionAlias
+                //{
+                //    ImageUrl = "theirimage",
+                //    Name = "Their name",
+                //}
             });
 
             return Json(new
@@ -66,11 +66,9 @@ namespace WebEdgeClient.Controllers
 
             var invite = JsonConvert.DeserializeObject<ConnectionInvitationMessage>(json);
             var (request, record) = await connectionService.CreateRequestAsync(context, invite);
-            record.Alias = new ConnectionAlias()
-            {
-                ImageUrl = "url",
-                Name = "name"
-            };
+            request.ImageUrl = "request imgUrl";
+            request.Label = model.WalletId;
+
             await messageService.SendAsync(context, request, record);
 
             var record2tmpb = await connectionService.ListAsync(context);

@@ -45,7 +45,6 @@ namespace WebEdgeClient
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
             services.AddAriesFramework(builder =>
             {
                 builder.RegisterEdgeAgent(options =>
@@ -57,22 +56,6 @@ namespace WebEdgeClient
             });
             services.AddSingleton<IAgentLoader, AgentLoader>();
 
-            //services.AddOptions<AgentOptions>();
-            //services.AddLogging();
-            //services.AddHttpClient();
-
-            //services.AddSingleton<IEventAggregator, EventAggregator>();
-            //services.AddSingleton<IProvisioningService, DefaultProvisioningService>();
-            //services.AddSingleton<IAgent, DefaultAgent>();
-            //services.AddSingleton<IConnectionService, DefaultConnectionService>();
-            //services.AddSingleton<IMessageService, DefaultMessageService>();
-            //services.AddSingleton<IMessageDispatcher, HttpMessageDispatcher>();
-            //services.AddSingleton<IEdgeClientService, EdgeClientService>();
-            //services.AddSingleton<IWalletService, DefaultWalletService>();
-            //services.AddSingleton<IWalletRecordService, DefaultWalletRecordService>();
-            //services.AddSingleton<IPoolService, DefaultPoolService>();
-            //services.AddSingleton<IAgentProvider, DefaultAgentProvider
-            //services.AddDefaultMessageHandlers();
 
             services.AddControllers();
             services.AddRouteAnalyzer();
